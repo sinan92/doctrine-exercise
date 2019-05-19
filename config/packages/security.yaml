@@ -1,0 +1,26 @@
+security:
+    firewalls:
+        secured_area:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                login_path:  /login
+                check_path:  /login_check
+            logout:
+                 path: /quit
+                 target: /
+    access_control:
+        - { path: ^/adminpage, roles: ROLE_ADMIN }
+        - { path: ^/userpage, roles: [ROLE_ADMIN,ROLE_USER] }
+
+    providers:
+        db_provider:
+                    entity:
+                        class: App\Entity\User
+                        property: userName
+
+
+    encoders:
+        App\Entity\User:
+             algorithm: bcrypt
+
